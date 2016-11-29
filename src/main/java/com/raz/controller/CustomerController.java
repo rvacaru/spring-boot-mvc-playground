@@ -19,14 +19,14 @@ public class CustomerController {
 		this.customerService = customerService;
 	}
 
-	@RequestMapping("/customers")
+	@RequestMapping("/customers/list")
 	public String listAllCustomers(Model model) {
 		model.addAttribute("customers", customerService.getAllCustomers());
 
 		return "customers";
 	}
 
-	@RequestMapping("/customer/{id}")
+	@RequestMapping("/customer/get/{id}")
 	public String getCustomer(@PathVariable Integer id, Model model) {
 		model.addAttribute("customer", customerService.getCustomerById(id));
 
