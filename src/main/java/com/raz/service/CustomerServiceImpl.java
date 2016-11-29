@@ -4,6 +4,7 @@ import com.raz.domain.Customer;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,13 +28,20 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override public Customer saveOrUpdateCustomer(Customer customer) {
-		if(customer != null && customer.getId() != null){
+		if(customer != null){
+			if(customer.getId() == null){
+				customer.setId(getNextIndex());
+			}
 			customerDb.put(customer.getId(), customer);
 			return customerDb.get(customer.getId());
 		} else{
 			throw new IllegalArgumentException("Customer can't be null, bitch");
 		}
 
+	}
+
+	private Integer getNextIndex() {
+		return Collections.max(customerDb.keySet()) + 1;
 	}
 
 	@Override public void deleteCustomer(Integer id) {
